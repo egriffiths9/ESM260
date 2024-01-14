@@ -1,0 +1,175 @@
+---
+title: "ESM 260 Problem Set 1"
+author: "E Griffiths"
+date: "2024-01-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(ggplot2)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(broom)
+
+adult_fish <- read_csv("adult_fish.csv") %>%
+  drop_na()
+as.numeric("Density")
+```
+
+Question 1: Make a histogram that displays the mean density of the organism (y-axis) at Rarotonga and Aitutaki for 2009 and for 2024. Add the 95% confindence intervals for each species.
+
+a) Surgeonfish
+
+```{r}
+adult_surgeonfish <- adult_fish %>%
+  filter(Fish == "Surgeonfish")
+
+adult_surgeonfish_plot <- ggplot(adult_surgeonfish, aes(x = as.factor(Year), y = Density, fill = as.factor(Island))) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.8) +
+  labs(x = "Year", y = "Density (per 100m2)", title = "Adult Surgeonfish") +
+  guides(fill = guide_legend(title = "Island")) +
+  geom_errorbar( aes(ymin = Density - 32, ymax = Density + 32), width=0.4, colour="black", width = 0.08, position = position_dodge(0.8)) +
+  theme_minimal() 
+adult_surgeonfish_plot
+
+ggsave("adult_surgeonfish_plot.jpeg", width = 7, height = 4, units = "in")
+```
+
+b) Coral Trout
+
+```{r}
+adult_coraltrout <- adult_fish %>%
+  filter(Fish == "Coral Trout")
+
+adult_coraltrout_plot <- ggplot(adult_coraltrout, aes(x = as.factor(Year), y = Density, fill = as.factor(Island))) +
+ geom_bar(stat = "identity", position = "dodge", width = 0.8) +
+  labs(x = "Year", y = "Density (per 100m2)", title = "Adult Coral Trout") +
+  guides(fill = guide_legend(title = "Island")) +
+ geom_errorbar( aes(ymin = Density - 21, ymax = Density + 21), width=0.4, colour="black", width = 0.08, position = position_dodge(0.8)) +
+ theme_minimal() 
+adult_coraltrout_plot
+
+ggsave("adult_coraltrout_plot.jpeg", width = 7, height = 4, units = "in")
+```
+
+c) Spotted Damselfish
+
+```{r}
+adult_spotteddamsel <- adult_fish %>%
+  filter(Fish == "Spotted Damselfish")
+
+adult_spotteddamsel_plot <- ggplot(adult_spotteddamsel, aes(x = as.factor(Year), y = Density, fill = as.factor(Island))) +
+ geom_bar(stat = "identity", position = "dodge", width = 0.8) +
+  labs(x = "Year", y = "Density (per 100m2)", title = "Adult Spotted Damselfish") +
+  guides(fill = guide_legend(title = "Island")) +
+ geom_errorbar( aes(ymin = Density - 47, ymax = Density + 47), width=0.4, colour="black", width = 0.08, position = position_dodge(0.8)) +
+ theme_minimal() 
+adult_spotteddamsel_plot
+
+ggsave("adult_spotteddamsel_plot.jpeg", width = 7, height = 4, units = "in")
+```
+d)
+
+```{r}
+adult_yellowdamsel <- adult_fish %>%
+  filter(Fish == "Yellow Damselfish")
+
+adult_yellowdamsel_plot <- ggplot(adult_yellowdamsel, aes(x = as.factor(Year), y = Density, fill = as.factor(Island))) +
+ geom_bar(stat = "identity", position = "dodge", width = 0.8) +
+  labs(x = "Year", y = "Density (per 100m2)", title = "Adult Yellow Damselfish") +
+  guides(fill = guide_legend(title = "Island")) +
+ geom_errorbar( aes(ymin = Density - 15, ymax = Density + 15), width=0.4, colour="black", width = 0.08, position = position_dodge(0.8)) +
+ theme_minimal() 
+adult_yellowdamsel_plot
+
+ggsave("adult_yellowdamsel_plot.jpeg", width = 7, height = 4, units = "in")
+```
+
+Question 2: Do the same as in Question 1 for the recruits (young) of each fish species.  
+
+```{r}
+young_fish <- read_csv("juve_fish.csv") %>%
+drop_na()
+as.numeric("Density")
+```
+
+a) Surgeonfish
+
+```{r}
+young_surgeonfish <- young_fish %>%
+  filter(Fish == "Surgeonfish")
+
+young_surgeonfish_plot <- ggplot(young_surgeonfish, aes(x = as.factor(Year), y = Density, fill = as.factor(Island))) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.8) +
+  labs(x = "Year", y = "Density (per 100m2)", title = "Young Surgeonfish") +
+  guides(fill = guide_legend(title = "Island")) +
+  geom_errorbar( aes(ymin = Density - 10.0, ymax = Density + 10.0), width=0.4, colour="black", width = 0.08, position = position_dodge(0.8)) +
+  theme_minimal() 
+young_surgeonfish_plot
+
+ggsave("young_surgeonfish_plot.jpeg", width = 7, height = 4, units = "in")
+```
+
+b) Coral Trout
+
+```{r}
+young_coraltrout <- young_fish %>%
+  filter(Fish == "Coral Trout")
+
+young_coraltrout_plot <- ggplot(young_coraltrout, aes(x = as.factor(Year), y = Density, fill = as.factor(Island))) +
+ geom_bar(stat = "identity", position = "dodge", width = 0.8) +
+  labs(x = "Year", y = "Density (per 100m2)", title = "Young Coral Trout") +
+  guides(fill = guide_legend(title = "Island")) +
+ geom_errorbar( aes(ymin = Density - 2.5, ymax = Density + 2.5), width=0.4, colour="black", width = 0.08, position = position_dodge(0.8)) +
+ theme_minimal() 
+young_coraltrout_plot
+
+ggsave("young_coraltrout_plot.jpeg", width = 7, height = 4, units = "in")
+```
+
+c) Spotted Damselfish
+
+```{r}
+young_spotteddamsel <- young_fish %>%
+  filter(Fish == "Spotted Damselfish")
+
+young_spotteddamsel_plot <- ggplot(young_spotteddamsel, aes(x = as.factor(Year), y = Density, fill = as.factor(Island))) +
+ geom_bar(stat = "identity", position = "dodge", width = 0.8) +
+  labs(x = "Year", y = "Density (per 100m2)", title = "Young Spotted Damselfish") +
+  guides(fill = guide_legend(title = "Island")) +
+ geom_errorbar( aes(ymin = Density - 5.0, ymax = Density + 5.0), width=0.4, colour="black", width = 0.08, position = position_dodge(0.8)) +
+ theme_minimal() 
+young_spotteddamsel_plot
+
+ggsave("young_spotteddamsel_plot.jpeg", width = 7, height = 4, units = "in")
+```
+
+d) Yellow Damselfish
+
+```{r}
+young_yellowdamsel <- young_fish %>%
+  filter(Fish == "Yellow Damselfish")
+
+young_yellowdamsel_plot <- ggplot(young_yellowdamsel, aes(x = as.factor(Year), y = Density, fill = as.factor(Island))) +
+ geom_bar(stat = "identity", position = "dodge", width = 0.8) +
+  labs(x = "Year", y = "Density (per 100m2)", title = "Young Yellow Damselfish") +
+  guides(fill = guide_legend(title = "Island")) +
+ geom_errorbar( aes(ymin = Density - 4.0, ymax = Density + 4.0), width=0.4, colour="black", width = 0.08, position = position_dodge(0.8)) +
+ theme_minimal() 
+young_yellowdamsel_plot
+
+ggsave("young_yellowdamsel_plot.jpeg", width = 7, height = 4, units = "in")
+```
+
+
+
+
+
+
+
+
+
